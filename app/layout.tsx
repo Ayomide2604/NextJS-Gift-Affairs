@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../assets/css/cartzilla-icons.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../assets/css/theme.css";
 import BootstrapClient from "@/utils/bootstrapClient";
@@ -20,6 +20,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				<BootstrapClient />
+				<Header />
 				{children}
 			</body>
 		</html>
