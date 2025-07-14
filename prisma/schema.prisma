@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   // output   = "../app/generated/prisma"
@@ -15,6 +9,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+// Account Model (OAuth)
 model Account {
   id                String  @id @default(cuid())
   userId            String  @map("user_id")
@@ -35,6 +30,7 @@ model Account {
   @@map("accounts")
 }
 
+// Session Model
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
@@ -45,6 +41,7 @@ model Session {
   @@map("sessions")
 }
 
+// User Model
 model User {
   id             String    @id @default(cuid())
   name           String?
@@ -53,12 +50,17 @@ model User {
   emailVerified  DateTime? @map("email_verified")
   hashedPassword String?
   image          String?
-  accounts       Account[]
-  sessions       Session[]
+
+  accounts Account[]
+  sessions Session[]
+
+  cart   Cart?   @relation
+  orders Order[]
 
   @@map("users")
 }
 
+// Verification Token
 model VerificationToken {
   identifier String
   token      String
@@ -66,4 +68,82 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+// Collection Model
+model Collection {
+  id       String    @id @default(uuid())
+  title    String
+  products Product[]
+}
+
+// Product Model
+model Product {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  price       Float
+
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId String
+
+  images     ProductImage[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+  createdAt  DateTime       @default(now())
+}
+
+// ProductImage Model (for multiple images per product)
+model ProductImage {
+  id        String  @id @default(uuid())
+  url       String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+// Cart Model (supports guest + user)
+model Cart {
+  id        String     @id @default(uuid())
+  user      User?      @relation(fields: [userId], references: [id])
+  userId    String?    @unique
+  cartItems CartItem[]
+  createdAt DateTime   @default(now())
+}
+
+// CartItem Model
+model CartItem {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  cartId    String
+  quantity  Int     @default(1)
+}
+
+// Order Model (linked to User)
+model Order {
+  id         String      @id @default(uuid())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String
+  status     OrderStatus
+  orderItems OrderItem[]
+  createdAt  DateTime    @default(now())
+}
+
+// OrderItem Model
+model OrderItem {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  quantity  Int
+  price     Float // Price at time of purchase
+}
+
+// Order Status Enum
+enum OrderStatus {
+  PENDING
+  SUCCESSFUL
+  FAILED
 }
