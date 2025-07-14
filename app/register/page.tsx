@@ -6,7 +6,6 @@ import Link from "next/link";
 import AuthFooter from "../components/AuthFooter";
 import SocialAuth from "../components/SocialAuth";
 import RegisterForm from "./RegisterForm";
-import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
