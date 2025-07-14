@@ -21,7 +21,7 @@ export default function RootLayout({
 			<body>
 				<BootstrapClient />
 				<Header />
-				{children}
+				<main className="content-wrapper">{children}</main>
 			</body>
 		</html>
 	);

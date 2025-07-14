@@ -1,5 +1,6 @@
 import React from "react";
 import NotFoundSvg from "./components/NotFoundSvg";
+import Link from "next/link";
 
 const NotFoundPage = () => {
 	return (
@@ -52,37 +53,37 @@ const NotFoundPage = () => {
 				<div className="row row-cols-1 row-cols-md-3 g-3 g-lg-4">
 					<div className="col">
 						<div className="nav flex-column position-relative h-100 border rounded-5 p-4 pt-3">
-							<a
+							<Link
 								className="nav-link animate-underline stretched-link text-body-emphasis fw-semibold px-0 mb-1"
 								href="home-fashion-v2.html"
 							>
 								<span className="animate-target">Go to homepage</span>
 								<i className="ci-chevron-right fs-base ms-1"></i>
-							</a>
+							</Link>
 							<span className="fs-sm">Continue shopping from the homepage</span>
 						</div>
 					</div>
 					<div className="col">
 						<div className="nav flex-column position-relative h-100 border rounded-5 p-4 pt-3">
-							<a
+							<Link
 								className="nav-link animate-underline stretched-link text-body-emphasis fw-semibold px-0 mb-1"
 								href="shop-catalog-fashion.html"
 							>
 								<span className="animate-target">Trending products</span>
 								<i className="ci-chevron-right fs-base ms-1"></i>
-							</a>
+							</Link>
 							<span className="fs-sm">Check out the trending products</span>
 						</div>
 					</div>
 					<div className="col">
 						<div className="nav flex-column position-relative h-100 border rounded-5 p-4 pt-3">
-							<a
+							<Link
 								className="nav-link animate-underline stretched-link text-body-emphasis fw-semibold px-0 mb-1"
 								href="#!"
 							>
 								<span className="animate-target">Help and support</span>
 								<i className="ci-chevron-right fs-base ms-1"></i>
-							</a>
+							</Link>
 							<span className="fs-sm">Our friendly team here to help</span>
 						</div>
 					</div>
