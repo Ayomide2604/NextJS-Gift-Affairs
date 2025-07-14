@@ -1,6 +1,13 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 
 const ThemeToggle = () => {
+	const [theme, setTheme] = useState("light");
+
+	useEffect(() => {
+		document.body.setAttribute("data-bs-theme", theme);
+	}, [theme]);
+
 	return (
 		<div className="dropdown">
 			<button
@@ -11,7 +18,15 @@ const ThemeToggle = () => {
 				type="button"
 			>
 				<span className="theme-icon-active d-flex animate-target">
-					<i className="ci-sun" />
+					<i
+						className={`ci-sun  ${theme === "light" ? "d-block" : "d-none"}`}
+					/>
+					<i
+						className={`ci-moon  ${theme === "dark" ? "d-block" : "d-none"}`}
+					/>
+					<i
+						className={`ci-auto  ${theme === "auto" ? "d-block" : "d-none"}`}
+					/>
 				</span>
 			</button>
 			<ul
@@ -22,10 +37,11 @@ const ThemeToggle = () => {
 			>
 				<li>
 					<button
-						aria-pressed="true"
-						className="dropdown-item active"
-						data-bs-theme-value="light"
+						aria-pressed={theme === "light" ? "true" : "false"}
+						className={`dropdown-item ${theme === "light" && "active"}`}
+						data-bs-theme-value={theme}
 						type="button"
+						onClick={() => setTheme("light")}
 					>
 						<span className="theme-icon d-flex fs-base me-2">
 							<i className="ci-sun" />
@@ -36,10 +52,11 @@ const ThemeToggle = () => {
 				</li>
 				<li>
 					<button
-						aria-pressed="false"
-						className="dropdown-item"
-						data-bs-theme-value="dark"
+						aria-pressed={theme === "dark" ? "true" : "false"}
+						className={`dropdown-item ${theme === "dark" && "active"}`}
+						data-bs-theme-value={theme}
 						type="button"
+						onClick={() => setTheme("dark")}
 					>
 						<span className="theme-icon d-flex fs-base me-2">
 							<i className="ci-moon" />
@@ -50,10 +67,11 @@ const ThemeToggle = () => {
 				</li>
 				<li>
 					<button
-						aria-pressed="false"
-						className="dropdown-item"
-						data-bs-theme-value="auto"
+						aria-pressed={theme === "auto" ? "true" : "false"}
+						className={`dropdown-item ${theme === "auto" && "active"}`}
+						data-bs-theme-value={theme}
 						type="button"
+						onClick={() => setTheme("auto")}
 					>
 						<span className="theme-icon d-flex fs-base me-2">
 							<i className="ci-auto" />
