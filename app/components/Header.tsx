@@ -42,7 +42,7 @@ const Header = () => {
 					</div>
 					<Link
 						className="navbar-brand fs-2 py-0 m-0 me-auto me-sm-n5"
-						href="index.html"
+						href="/"
 					>
 						Gift Shop
 					</Link>
@@ -65,7 +65,7 @@ const Header = () => {
 						{/* Account */}
 						<Link
 							className="btn btn-icon btn-lg fs-lg btn-outline-secondary border-0 rounded-circle animate-shake d-none d-md-inline-flex"
-							href="account-signin.html"
+							href="/login"
 						>
 							<i className="ci-user animate-target" />
 							<span className="visually-hidden">Account</span>
