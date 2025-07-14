@@ -38,8 +38,8 @@ const RegisterPage = () => {
 			const response = await axios.post("/api/register", data);
 			if (response.status === 201) {
 				toast.success("user registration successful");
-				setLoading(false);
 				router.push("/login");
+				setLoading(false);
 			}
 		} catch (error: Error | unknown) {
 			if (error instanceof Error) {

@@ -35,13 +35,15 @@ const LoginPage = () => {
 
 			if (response?.ok) {
 				router.push("/");
-				setLoading(false);
 				toast.success("Login successful");
+				setLoading(false);
 			}
 		} catch (error) {
 			console.error(error);
-			setLoading(false);
 			toast.error("Login failed");
+			setLoading(false);
+		} finally {
+			setLoading(false);
 		}
 	};
 
