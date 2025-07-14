@@ -4,7 +4,8 @@ import "../assets/css/cartzilla-icons.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../assets/css/theme.css";
 import BootstrapClient from "@/utils/bootstrapClient";
-import Header from "./components/Header";
+import AuthProvider from "@/utils/AuthProvider";
+import HeaderWrapper from "./components/HeaderWrapper";
 
 export const metadata: Metadata = {
 	title: "Gift Affairs",
@@ -19,9 +20,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<BootstrapClient />
-				<Header />
-				<main className="content-wrapper">{children}</main>
+				<AuthProvider>
+					<BootstrapClient />
+					<HeaderWrapper />
+					{children}
+				</AuthProvider>
 			</body>
 		</html>
 	);
