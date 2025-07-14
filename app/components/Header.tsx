@@ -208,10 +208,7 @@ const Header = () => {
 						</div>
 						<div className="offcanvas-header border-top px-0 py-3 mt-3 d-md-none">
 							<div className="nav nav-justified w-100">
-								<Link
-									className="nav-link border-end"
-									href="account-signin.html"
-								>
+								<Link className="nav-link border-end" href="/login">
 									<i className="ci-user fs-lg opacity-60 me-2" />
 									Account
 								</Link>
