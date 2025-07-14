@@ -25,25 +25,32 @@ const LoginPage = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		try {
-			setLoading(true);
+		setLoading(true);
+
+		const res = await fetch("/api/login", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ email: user.email, password: user.password }),
+		});
+		const data = await res.json();
+
+		if (!res.ok) {
+			setLoading(false);
+			if (data.message) toast.error(data.message);
+			toast.error("Login failed, An Unexpected Error Occurred");
+		} else {
+			// If it passes the checks we can sign in
 			const response = await signIn("credentials", {
-				email: user.email,
+				email: user.email.toLowerCase(),
 				password: user.password,
 				redirect: false,
 			});
-
 			if (response?.ok) {
 				router.push("/");
 				toast.success("Login successful");
-				setLoading(false);
+			} else {
+				toast.error("Login failed, An Unexpected Error Occurred");
 			}
-		} catch (error) {
-			console.error(error);
-			toast.error("Login failed");
-			setLoading(false);
-		} finally {
-			setLoading(false);
 		}
 	};
 

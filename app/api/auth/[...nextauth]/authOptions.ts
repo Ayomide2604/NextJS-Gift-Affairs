@@ -33,10 +33,18 @@ export const authOptions: NextAuthOptions = {
 					user.hashedPassword!
 				);
 
-				if (!passwordsMatch) return null;
+				if (!passwordsMatch) {
+					const error = new Error("Invalid email or password");
+					error.name = "InvalidCredentials";
+					throw error;
+				}
 
 				if (!user.isVerified) {
-					throw new Error("Please verify your email before logging in.");
+					const error = new Error(
+						"Please verify your email before logging in."
+					);
+					error.name = "EmailNotVerified";
+					throw error;
 				}
 
 				return user;

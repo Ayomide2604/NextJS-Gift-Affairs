@@ -21,35 +21,40 @@ const RegisterPage = () => {
 	const [loading, setLoading] = React.useState(false);
 
 	const handleRegister = async (e: React.FormEvent) => {
-		setLoading(true);
 		e.preventDefault();
+		setLoading(true);
 		if (password !== confirmPassword) {
-			setLoading(false);
 			toast.error("Passwords do not match");
-			return;
+			setLoading(false);
 		}
 
-		const data = {
-			name: `${firstName} ${lastName}`,
-			email,
+		const user = {
+			name: `${firstName.toLowerCase()} ${lastName.toLowerCase()}`,
+			email: email.toLowerCase(),
 			password,
 		};
-		try {
-			const response = await axios.post("/api/register", data);
-			if (response.status === 201) {
-				toast.success("user registration successful");
-				router.push("/login");
-				setLoading(false);
-			}
-		} catch (error: Error | unknown) {
-			if (error instanceof Error) {
-				setLoading(false);
-				toast.error(error.message);
+
+		const res = await fetch("/api/register", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				name: user.name,
+				email: user.email,
+				password: user.password,
+			}),
+		});
+		const data = await res.json();
+		if (!res.ok) {
+			if (data.message) {
+				toast.error(data.message);
 			} else {
-				setLoading(false);
-				toast.error("An Unexpected Error Occurred");
+				toast.error("An Unexpected Error Occured");
 			}
-		} finally {
+			setLoading(false);
+		} else {
+			toast.success(
+				`Registration successful, we have sent a confirmation mail to ${user.email}`
+			);
 			setLoading(false);
 		}
 	};
