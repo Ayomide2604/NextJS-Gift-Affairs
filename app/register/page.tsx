@@ -105,7 +105,6 @@ const RegisterPage = () => {
 						email={email}
 						password={password}
 						confirmPassword={confirmPassword}
-						loading={loading}
 						setFirstName={setFirstName}
 						setLastName={setLastName}
 						setEmail={setEmail}
