@@ -54,6 +54,7 @@ const RegisterPage = () => {
 			toast.success(
 				`Registration successful, we have sent a confirmation mail to ${user.email}`
 			);
+			router.push("/login");
 			setLoading(false);
 		}
 	};
