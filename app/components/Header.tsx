@@ -12,7 +12,7 @@ const Header = () => {
 			<CartOffCanvas />
 			<SearchOffCanvas />
 			<header
-				className="navbar navbar-expand-lg navbar-sticky bg-body d-block z-fixed p-0 fixed-top navbar-stuck"
+				className="navbar navbar-expand-lg navbar-sticky bg-body d-block z-fixed p-0"
 				data-sticky-navbar='{"offset": 500}'
 			>
 				<div className="container py-2 py-lg-3">
