@@ -2,7 +2,7 @@
 import Header from "./Header";
 import { usePathname } from "next/navigation";
 
-const HIDE_HEADER_PATHS = ["/login"];
+const HIDE_HEADER_PATHS = ["/login", "/register"];
 
 export default function HeaderWrapper() {
 	const pathname = usePathname();

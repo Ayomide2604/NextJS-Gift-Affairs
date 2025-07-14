@@ -5,8 +5,20 @@ import CartToggle from "./CartToggle";
 import CartOffCanvas from "./CartOffCanvas";
 import SearchOffCanvas from "./SearchOffCanvas";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import defaultImage from "@/assets/img/auth/cover.png";
+import { useLogout } from "@/hooks/useLogout";
+import Loader from "./Loader";
 
 const Header = () => {
+	const { data: session, status } = useSession();
+	const { logout, loading: logoutLoading } = useLogout();
+
+	if (logoutLoading || status === "loading") {
+		return <Loader />;
+	}
+
 	return (
 		<>
 			<CartOffCanvas />
@@ -116,6 +128,7 @@ const Header = () => {
 											</Link>
 										</li>
 									</ul>
+
 									<button
 										aria-controls="searchBox"
 										className="btn btn-outline-secondary justify-content-start w-100 px-3 mb-lg-2 ms-3 d-none d-lg-inline-flex"
@@ -129,6 +142,67 @@ const Header = () => {
 										<i className="ci-search fs-base ms-n1 me-2" />
 										<span className="text-body-tertiary fw-normal">Search</span>
 									</button>
+
+									{/* user Profile */}
+									{session?.user && (
+										<div className="nav-item dropdown pb-lg-2 me-lg-n1 me-xl-0">
+											<a
+												className="nav-link dropdown-toggle show"
+												href="#"
+												role="button"
+												data-bs-toggle="dropdown"
+												data-bs-trigger="hover"
+												data-bs-auto-close="outside"
+												aria-expanded="true"
+											>
+												<Image
+													src={defaultImage}
+													className=" border border-secondary rounded-circle"
+													alt="profile picture"
+													style={{ width: 40, height: 40, objectFit: "cover" }}
+												/>
+											</a>
+											<ul className="dropdown-menu" data-bs-popper="static">
+												<li className="dropend">
+													<a
+														className="dropdown-item dropdown-toggle"
+														href="#!"
+														role="button"
+														data-bs-toggle="dropdown"
+														data-bs-trigger="hover"
+														aria-expanded="false"
+													>
+														Account
+													</a>
+												</li>
+												<li className="dropend">
+													<a
+														className="dropdown-item dropdown-toggle"
+														href="#!"
+														role="button"
+														data-bs-toggle="dropdown"
+														data-bs-trigger="hover"
+														aria-expanded="false"
+													>
+														Orders
+													</a>
+												</li>
+												<li className="dropend">
+													<a
+														className="dropdown-item dropdown-toggle"
+														href="#!"
+														role="button"
+														data-bs-toggle="dropdown"
+														data-bs-trigger="hover"
+														onClick={logout}
+														aria-expanded="false"
+													>
+														Logout
+													</a>
+												</li>
+											</ul>
+										</div>
+									)}
 								</div>
 							</div>
 						</div>

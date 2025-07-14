@@ -6,6 +6,10 @@ import Link from "next/link";
 import cover from "@/assets/img/auth/cover.png";
 import LoginForm from "./LoginForm";
 import { useRouter } from "next/navigation";
+import Loader from "../components/Loader";
+import AuthFooter from "../components/AuthFooter";
+import SocialAuth from "../components/SocialAuth";
+import { toast } from "sonner";
 
 const LoginPage = () => {
 	const [user, setUser] = useState({ email: "", password: "" });
@@ -32,20 +36,22 @@ const LoginPage = () => {
 			if (response?.ok) {
 				router.push("/");
 				setLoading(false);
+				toast.success("Login successful");
 			}
 		} catch (error) {
 			console.error(error);
+			setLoading(false);
+			toast.error("Login failed");
 		}
 	};
 
 	if (loading) {
-		return <p>Loading...</p>;
+		return <Loader />;
 	}
 
 	return (
 		<main className="content-wrapper w-100 px-3 ps-lg-5 pe-lg-4 mx-auto">
 			<div className="d-lg-flex">
-				{/* <!-- Login form + Footer --> */}
 				<div
 					className="d-flex flex-column min-vh-100 w-100 py-4 mx-auto me-lg-5"
 					style={{ maxWidth: "416px" }}
@@ -60,12 +66,12 @@ const LoginPage = () => {
 					<h1 className="h2 mt-auto">Welcome back</h1>
 					<div className="nav fs-sm mb-4">
 						Don&apos;t have an account?
-						<a
+						<Link
 							className="nav-link text-decoration-underline p-0 ms-2"
-							href="account-signup.html"
+							href="/register"
 						>
 							Create an account
-						</a>
+						</Link>
 					</div>
 
 					{/* <!-- Form --> */}
@@ -85,54 +91,10 @@ const LoginPage = () => {
 					</div>
 
 					{/* <!-- Social login --> */}
-					<div className="d-flex flex-column flex-sm-row gap-3 pb-4 mb-3 mb-lg-4">
-						<button
-							type="button"
-							className="btn btn-lg btn-outline-secondary w-100 px-2"
-						>
-							<i className="ci-google ms-1 me-1"></i>
-							Google
-						</button>
-						<button
-							type="button"
-							className="btn btn-lg btn-outline-secondary w-100 px-2"
-						>
-							<i className="ci-facebook ms-1 me-1"></i>
-							Facebook
-						</button>
-						<button
-							type="button"
-							className="btn btn-lg btn-outline-secondary w-100 px-2"
-						>
-							<i className="ci-apple ms-1 me-1"></i>
-							Apple
-						</button>
-					</div>
+					<SocialAuth />
 
 					{/* <!-- Footer --> */}
-					<footer className="mt-auto">
-						<div className="nav mb-4">
-							<a
-								className="nav-link text-decoration-underline p-0"
-								href="help-topics-v1.html"
-							>
-								Need help?
-							</a>
-						</div>
-						<p className="fs-xs mb-0">
-							© All rights reserved. Made by{" "}
-							<span className="animate-underline">
-								<a
-									className="animate-target text-dark-emphasis text-decoration-none"
-									href="https://createx.studio/"
-									target="_blank"
-									rel="noreferrer"
-								>
-									Createx Studio
-								</a>
-							</span>
-						</p>
-					</footer>
+					<AuthFooter />
 				</div>
 
 				{/* <!-- Cover image visible on screens > 992px wide (lg breakpoint) --> */}

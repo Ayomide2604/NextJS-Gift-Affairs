@@ -6,6 +6,7 @@ import "../assets/css/theme.css";
 import BootstrapClient from "@/utils/bootstrapClient";
 import AuthProvider from "@/utils/AuthProvider";
 import HeaderWrapper from "./components/HeaderWrapper";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
 	title: "Gift Affairs",
@@ -23,6 +24,7 @@ export default function RootLayout({
 				<AuthProvider>
 					<BootstrapClient />
 					<HeaderWrapper />
+					<Toaster richColors position="top-right" duration={2000} />
 					{children}
 				</AuthProvider>
 			</body>
