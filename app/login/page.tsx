@@ -36,8 +36,12 @@ const LoginPage = () => {
 
 		if (!res.ok) {
 			setLoading(false);
-			if (data.message) toast.error(data.message);
-			toast.error("Login failed, An Unexpected Error Occurred");
+
+			if (data?.message) {
+				toast.error(data.message);
+			} else {
+				toast.error("Login failed, An Unexpected Error Occurred");
+			}
 		} else {
 			// If it passes the checks we can sign in
 			const response = await signIn("credentials", {
