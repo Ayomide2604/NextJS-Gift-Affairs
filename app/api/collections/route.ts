@@ -5,7 +5,7 @@ import { z } from "zod";
 const schema = z.object({
 	title: z.string().min(3),
 });
-export async function GET(request: NextRequest) {
+export async function GET() {
 	const collections = await prisma.collection.findMany();
 
 	return NextResponse.json(collections);
